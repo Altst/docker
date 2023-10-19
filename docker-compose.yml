@@ -1,0 +1,33 @@
+version: '3'
+services: 
+  front:
+    build:
+      context: ./frontend
+    ports:
+      - "5000:5000"
+  back:
+    build:
+      context: ./backend
+    ports:
+      - "8081:8081"
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 1111
+      MYSQL_DATABASE: DockerDB
+      MYSQL_USER: user1
+      MYSQL_PASSWORD: 1111
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+  adminer:
+    image: adminer:latest
+    container_name: adminer_container
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+volumes:
+  mysql_data:
